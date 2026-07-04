@@ -94,6 +94,26 @@ const emit = defineEmits<{
   gap: 18px;
 }
 
+.nav-link {
+  min-height: 40px;
+  padding: 0 14px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #eef3fb;
+  color: #18253a;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.nav-link:hover {
+  background: #dfe8f6;
+  transform: translateY(-1px);
+}
+
 .notification-button {
   position: relative;
   width: 44px;
