@@ -6,7 +6,7 @@
       @click="sidebarOpen = false"
       aria-hidden="true"
     />
-    <Sidebar v-show="sidebarOpen" class="layout__sidebar" />
+    <Sidebar v-show="isSidebarVisible" class="layout__sidebar" />
     <div class="right-panel">
       <Header @toggle-sidebar="toggleSidebar" />
       <main class="content">
@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import Footer from './Footer.vue';
 import Header from './Header.vue';
@@ -31,6 +31,8 @@ const isMobile = ref(false);
 const sidebarOpen = ref(true);
 let mediaQuery: MediaQueryList | null = null;
 
+const isSidebarVisible = computed(() => !isMobile.value || sidebarOpen.value);
+
 const syncSidebarState = () => {
   if (!mediaQuery) {
     return;
@@ -41,6 +43,10 @@ const syncSidebarState = () => {
 };
 
 const toggleSidebar = () => {
+  if (!isMobile.value) {
+    return;
+  }
+
   sidebarOpen.value = !sidebarOpen.value;
 };
 
@@ -70,15 +76,19 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .layout {
-  display: flex;
+  --sidebar-width: 256px;
+  --header-height: 76px;
+
   min-height: 100vh;
-  overflow: hidden;
   background: #f3f6fb;
   position: relative;
 }
 
 .layout__sidebar {
-  flex: 0 0 auto;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 30;
+  width: var(--sidebar-width);
 }
 
 .layout__backdrop {
@@ -86,23 +96,21 @@ onBeforeUnmount(() => {
 }
 
 .right-panel {
-  flex: 1;
   display: flex;
   flex-direction: column;
+  margin-left: var(--sidebar-width);
   min-width: 0;
+  min-height: 100vh;
 }
 
 .content {
   flex: 1;
+  min-height: 0;
   overflow: auto;
-  padding: 0;
+  padding: calc(var(--header-height) + 24px) 28px 24px;
 }
 
 @media (max-width: 768px) {
-  .layout {
-    display: block;
-  }
-
   .layout__backdrop {
     display: block;
     position: fixed;
@@ -115,14 +123,17 @@ onBeforeUnmount(() => {
   .layout__sidebar {
     position: fixed;
     inset: 0 auto 0 0;
-    z-index: 30;
     width: min(256px, 86vw);
     box-shadow: 14px 0 36px rgba(18, 30, 53, 0.24);
   }
 
   .right-panel {
-    min-height: 100vh;
     width: 100%;
+    margin-left: 0;
+  }
+
+  .content {
+    padding: calc(72px + 16px) 16px 18px;
   }
 }
 </style>

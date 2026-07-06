@@ -2,7 +2,7 @@
   <section class="dashboard">
     <div class="dashboard__header">
       <div>
-        <h1>Quản lý Đonơ Hang</h1>
+        <h1>Quản lý Hóa Đơn Bán Hàng</h1>
       </div>
       <button type="button" class="add-button">
         <span>+</span>

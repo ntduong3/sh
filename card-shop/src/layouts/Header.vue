@@ -1,6 +1,11 @@
 <template>
   <header class="header-bar">
-    <button class="icon-button" type="button" aria-label="Toggle sidebar" @click="emit('toggle-sidebar')">
+    <button
+      class="icon-button"
+      type="button"
+      aria-label="Toggle sidebar"
+      @click="emit('toggle-sidebar')"
+    >
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M4 6h16M4 12h16M4 18h16" />
       </svg>
@@ -37,7 +42,7 @@ withDefaults(
     notificationCount?: number;
   }>(),
   {
-    userName: 'Nguyễn Văn A',
+    userName: 'Nguyễn Thị Hà Linh',
     notificationCount: 3,
   },
 );
@@ -49,6 +54,11 @@ const emit = defineEmits<{
 
 <style scoped>
 .header-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 256px;
+  z-index: 20;
   height: 76px;
   padding: 0 28px;
   background: rgba(255, 255, 255, 0.96);
@@ -170,5 +180,25 @@ const emit = defineEmits<{
   width: 18px;
   height: 18px;
   color: #243248;
+}
+
+@media (max-width: 768px) {
+  .header-bar {
+    left: 0;
+    height: 72px;
+    padding: 0 16px;
+  }
+
+  .header-actions {
+    gap: 10px;
+  }
+
+  .profile-button {
+    gap: 6px;
+  }
+
+  .user-name {
+    display: none;
+  }
 }
 </style>

@@ -40,8 +40,7 @@
 
     <div class="sidebar__logout">
       <a href="#" class="logout-link">
-        <LogOut :size="22" :stroke-width="1.8" aria-hidden="true" />
-        <span>Đăng xuất</span>
+        <span>©Nocopyright by Sunny Nguyen</span>
       </a>
     </div>
   </aside>
@@ -54,7 +53,6 @@ import {
   FileText,
   FolderClosed,
   LayoutGrid,
-  LogOut,
   Package,
   PackagePlus,
   Settings,
@@ -72,19 +70,22 @@ type MenuItem = {
 const menuItems: MenuItem[] = [
   {
     label: 'Tổng quan',
+    to: '/',
     icon: LayoutGrid,
   },
   {
     label: 'Sản phẩm',
-    to: '/',
+    to: '/product',
     icon: Package,
   },
   {
     label: 'Danh mục',
+    to: '/menu',
     icon: FolderClosed,
   },
   {
     label: 'Nhập hàng',
+    to: '/inputProduct',
     icon: PackagePlus,
   },
   {
@@ -99,14 +100,17 @@ const menuItems: MenuItem[] = [
   },
   {
     label: 'Thống kê',
+    to: '/summary',
     icon: BarChart3,
   },
   {
     label: 'Báo cáo',
+    to: '/report',
     icon: FileText,
   },
   {
     label: 'Cài đặt',
+    to: '/setting',
     icon: Settings,
   },
 ];
@@ -115,13 +119,15 @@ const menuItems: MenuItem[] = [
 <style scoped>
 .sidebar {
   width: 256px;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   background: linear-gradient(180deg, #23345a 0%, #1d2c4b 58%, #233556 100%);
   color: #d2d9e6;
   box-shadow: 10px 0 30px rgba(18, 30, 53, 0.16);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .sidebar__brand {
@@ -175,7 +181,7 @@ const menuItems: MenuItem[] = [
 }
 
 .nav-item:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: linear-gradient(180deg, #3d7ef0 0%, #2b67d3 100%);
   color: #ffffff;
 }
 
@@ -209,6 +215,7 @@ const menuItems: MenuItem[] = [
 }
 
 .logout-link {
+  font-size: 13px;
   display: flex;
   align-items: center;
   gap: 14px;
@@ -221,5 +228,11 @@ const menuItems: MenuItem[] = [
 .logout-link :deep(svg) {
   width: 22px;
   height: 22px;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: min(256px, 86vw);
+  }
 }
 </style>
